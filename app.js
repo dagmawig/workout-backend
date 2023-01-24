@@ -56,6 +56,25 @@ router.post("/loadData", (req, res) => {
     });
 });
 
+router.post("/updateFixTemp", (req, res) => {
+    const { userID, fixTempArr } = req.body;
+
+    Data.findOneAndUpdate(
+        { userID: userID },
+        {
+            $set: {
+                fixTempArr: fixTempArr
+            }
+        },
+        { new: true },
+        (err, data) => {
+            if (err) res.json({ success: false, err: err });
+            return res.json({ success: true, data: data })
+
+        });
+});
+
+
 router.post("/updateTemp", (req, res) => {
     const { userID, templateArr } = req.body;
 
@@ -69,11 +88,10 @@ router.post("/updateTemp", (req, res) => {
         { new: true },
         (err, data) => {
             if (err) res.json({ success: false, err: err });
-            return res.json({success: true, data: data})
+            return res.json({ success: true, data: data })
 
         });
 });
-
 
 
 // append /api for our http requests
