@@ -34,11 +34,9 @@ db.once("open", () => console.log("connected to database"));
 // checks if connection with the database is successful
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-
+// router to load user data
 router.post("/loadData", (req, res) => {
     const { userID, email } = req.body;
-
-    console.log(userID)
 
     Data.findOne({ userID: userID }, (err, data) => {
         if (err) res.json({ success: false, err: err });
@@ -57,6 +55,26 @@ router.post("/loadData", (req, res) => {
         }
     });
 });
+
+router.post("/updateTemp", (req, res) => {
+    const { userID, templateArr } = req.body;
+
+    Data.findOneAndUpdate(
+        { userID: userID },
+        {
+            $set: {
+                templateArr: templateArr
+            }
+        },
+        { new: true },
+        (err, data) => {
+            if (err) res.json({ success: false, err: err });
+            return res.json({success: true, data: data})
+
+        });
+});
+
+
 
 // append /api for our http requests
 app.use("/", router);
