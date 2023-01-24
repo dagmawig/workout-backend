@@ -94,6 +94,25 @@ router.post("/updateTemp", (req, res) => {
 });
 
 
+router.post("/updateWorkoutObj", (req, res) => {
+    const { userID, workoutObj } = req.body;
+
+    Data.findOneAndUpdate(
+        { userID: userID },
+        {
+            $set: {
+                workoutObj: workoutObj
+            }
+        },
+        { new: true },
+        (err, data) => {
+            if (err) res.json({ success: false, err: err });
+            return res.json({ success: true, data: data })
+
+        });
+});
+
+
 // append /api for our http requests
 app.use("/", router);
 
