@@ -37,7 +37,6 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 // router to load user data
 router.post("/loadData", (req, res) => {
     const { userID, email } = req.body;
-
     Data.findOne({ userID: userID }, (err, data) => {
         if (err) res.json({ success: false, err: err });
 
@@ -77,7 +76,7 @@ router.post("/updateFixTemp", (req, res) => {
 
 router.post("/updateTemp", (req, res) => {
     const { userID, templateArr } = req.body;
-
+    console.log("gets to updateTemp", userID, templateArr)
     Data.findOneAndUpdate(
         { userID: userID },
         {
@@ -95,13 +94,15 @@ router.post("/updateTemp", (req, res) => {
 
 
 router.post("/updateWorkoutObj", (req, res) => {
-    const { userID, workoutObj } = req.body;
+    const { userID, workoutObj, user, updatedTempArr } = req.body;
 
     Data.findOneAndUpdate(
         { userID: userID },
         {
             $set: {
-                workoutObj: workoutObj
+                workoutObj: workoutObj,
+                ...(user && {templateArr: updatedTempArr}),
+                ...(!user && {fixTempArr: updatedTempArr})
             }
         },
         { new: true },
