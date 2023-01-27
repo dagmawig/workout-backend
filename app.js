@@ -94,13 +94,14 @@ router.post("/updateTemp", (req, res) => {
 
 
 router.post("/updateWorkoutObj", (req, res) => {
-    const { userID, workoutObj, user, updatedTempArr } = req.body;
+    const { userID, workoutObj, user, updatedTempArr, record } = req.body;
 
     Data.findOneAndUpdate(
         { userID: userID },
         {
             $set: {
                 workoutObj: workoutObj,
+                record: record,
                 ...(user && {templateArr: updatedTempArr}),
                 ...(!user && {fixTempArr: updatedTempArr})
             }

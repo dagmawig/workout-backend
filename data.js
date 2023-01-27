@@ -151,7 +151,8 @@ const DataSchema = new Schema(
             }
         ]
     },
-    workoutObj: {type: Object, default:{}}
+    workoutObj: {type: Object, default:{}},
+    record: {type: Object, default: {}}
     },
     { timestamps: true, _id: true, minimize: false, strict: false }
 );
