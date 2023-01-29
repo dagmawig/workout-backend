@@ -51,7 +51,22 @@ router.post("/loadData", (req, res) => {
                 res.json({ success: true, data: data });
             })
         } else {
-            res.json({ success: true, data: data });
+            if (data.email === "") {
+                Data.findOneAndUpdate(
+                  { userID: userID },
+                  {
+                    $set: {
+                      email: email,
+                    },
+                  },
+                  { new: true },
+                  (err, data) => {
+                    if(err) res.json ({success: false, err: err});
+                    else res.json({success: true, data:data})
+                  }
+                );
+              }
+              else res.json({ success: true, data: data });
         }
     });
 });
