@@ -37,6 +37,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 // router to load user data
 router.post("/loadData", (req, res) => {
     const { userID, email } = req.body;
+    if(userID==='' || userID===undefined) res.json({success:false, err: "not the right userID"})
     Data.findOne({ userID: userID }, (err, data) => {
         if (err) res.json({ success: false, err: err });
 
