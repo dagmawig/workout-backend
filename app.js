@@ -118,8 +118,8 @@ router.post("/updateWorkoutObj", (req, res) => {
             $set: {
                 workoutObj: workoutObj,
                 record: record,
-                ...(user && {templateArr: updatedTempArr}),
-                ...(!user && {fixTempArr: updatedTempArr})
+                ...(user==='true' && {templateArr: updatedTempArr}),
+                ...(user!=='true' && {fixTempArr: updatedTempArr})
             }
         },
         { new: true },
