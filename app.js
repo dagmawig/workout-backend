@@ -245,6 +245,7 @@ router.post("/resetData", (req, res) => {
     )
 });
 
+// router to update preset exercise templates
 router.post("/updateFixTemp", (req, res) => {
     const { userID, fixTempArr } = req.body;
 
@@ -263,10 +264,10 @@ router.post("/updateFixTemp", (req, res) => {
         });
 });
 
-
+// router to update user exercise templates
 router.post("/updateTemp", (req, res) => {
     const { userID, templateArr } = req.body;
-    console.log("gets to updateTemp", userID, templateArr)
+    console.log("updateTemp")
     Data.findOneAndUpdate(
         { userID: userID },
         {
@@ -282,7 +283,7 @@ router.post("/updateTemp", (req, res) => {
         });
 });
 
-
+// router to update user workout data
 router.post("/updateWorkoutObj", (req, res) => {
     const { userID, workoutObj, user, updatedTempArr, record } = req.body;
 
