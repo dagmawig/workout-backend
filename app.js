@@ -424,6 +424,21 @@ router.post("/resetHistory", (req, res) => {
     )
   })
 
+  // router to delete user account
+  router.post("/deleteAccount", (req, res)=> {
+    const {userID} = req.body;
+    
+    Data.deleteOne({
+      userID: userID
+    }).then(resp=> {
+      
+      console.log(resp);
+      return res.json({success: resp.acknowledged})
+      
+    }).catch(e=>console.log(e));
+    
+  })
+
 // router to update preset exercise templates
 router.post("/updateFixTemp", (req, res) => {
     const { userID, fixTempArr } = req.body;
